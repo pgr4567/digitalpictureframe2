@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
-// const url = 'http://raspberrypi.local:3001/';
-const url = 'http://localhost:3001/';
 export default function Edit() {
     const [uploading, setUploading] = useState(false);
     const [filenames, setFilenames] = useState([]);
+    const url = 'http://' + window.location.hostname + ':3001/';
 
     useEffect(() => {
         fetch(url + 'getmedia')
             .then(res => res.json())
             .then(data => setFilenames(data.filenames))
             .catch(err => console.error('Failed to load media:', err));
-    }, [uploading]);
+    }, [uploading, url]);
 
     const handleDelete = async (filename) => {
         try {
@@ -28,7 +27,7 @@ export default function Edit() {
         }
     };
 
-    function renderMedia(filename) {
+    function renderMedia(filename: string) {
         const isVideo = /\.(mp4|avi|mov|wmv|flv|mkv)$/.test(filename);
 
         if (isVideo) {

@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 const IMAGE_DURATION = 10000;
-// const url = 'http://raspberrypi.local:3001/'
-const url = 'http://localhost:3001/';
+const DURATION_AFTER_VIDEO = 3000;
 
 export default function Home() {
     const [filenames, setFilenames] = useState<string[]>([]);
     const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
     const [isClient, setIsClient] = useState(false);
+    const url = 'http://' + window.location.hostname + ':3001/';
 
     useEffect(() => {
         setIsClient(true);
@@ -15,7 +15,7 @@ export default function Home() {
             .then(res => res.json())
             .then(data => setFilenames(data.filenames))
             .catch(err => console.error('Failed to load media:', err));
-    }, []);
+    }, [url]);
 
     const isVideo = useCallback((file: string) => {
         return /\.(mp4|avi|mov|wmv|flv|mkv)$/.test(file);
@@ -35,7 +35,7 @@ export default function Home() {
             const videoElement = document.getElementById('video-element') as HTMLVideoElement;
             videoElement.play();
             videoElement.onended = () => {
-                timeout = setTimeout(goToNextMedia, 3000);
+                timeout = setTimeout(goToNextMedia, DURATION_AFTER_VIDEO);
             };
         } else {
             timeout = setTimeout(goToNextMedia, IMAGE_DURATION);
