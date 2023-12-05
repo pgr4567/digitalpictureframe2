@@ -7,7 +7,7 @@ export default function Home() {
     const [filenames, setFilenames] = useState<string[]>([]);
     const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
     const [isClient, setIsClient] = useState(false);
-    const url = 'http://' + window.location.hostname + ':3001/';
+    const url = 'http://' + window.location.hostname + '/api/';
 
     useEffect(() => {
         setIsClient(true);

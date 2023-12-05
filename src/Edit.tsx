@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 export default function Edit() {
     const [uploading, setUploading] = useState(false);
     const [filenames, setFilenames] = useState([]);
-    const url = 'http://' + window.location.hostname + ':3001/';
+    const url = 'http://' + window.location.hostname + '/api/';
 
     useEffect(() => {
         fetch(url + 'getmedia')
